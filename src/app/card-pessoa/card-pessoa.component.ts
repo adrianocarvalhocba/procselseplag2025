@@ -1,12 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { Pessoa } from '../models/pessoas.models';
+import { SharedModule } from '../shared.module';
 
 @Component({
   selector: 'app-card-pessoa',
   templateUrl: './card-pessoa.component.html',
   styleUrl: './card-pessoa.component.scss',
   standalone: true,
-  imports: [],
+  imports: [SharedModule],
 })
 export class CardPessoaComponent {
   @Input() dadosPessoa: Pessoa = {} as Pessoa;

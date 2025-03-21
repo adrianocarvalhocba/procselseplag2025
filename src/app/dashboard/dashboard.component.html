@@ -1,29 +1,63 @@
-<div>
-  <mat-paginator
-    [length]="length"
-    [pageIndex]="currentPage"
-    [pageSize]="pageSize"
-    (page)="paginacao($event)"
-    showFirstLastButtons
-  ></mat-paginator>
-</div>
+<div class="bg-gray-100">
+  <!-- cabeçalho -->
+  <div class="flex flex-row justify-between items-center bg-indigo-950">
+    <div class="flex flex-col items-center p-5">
+      <div>
+        <img
+          src="assets/logo_pjcmt.png"
+          width="60px"
+          height="30px"
+          alt="logo-pjcmt"
+        />
+      </div>
 
-<div
-  class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5"
->
-  @for (pessoa of listaPessoas; track $index) {
+      <div class="text-white">Polícia Judiciária Civil</div>
+      <div class="text-white">Mato Grosso</div>
+    </div>
 
-  <app-card-pessoa class="mx-auto" [dadosPessoa]="pessoa"></app-card-pessoa>
+    <div
+      class="flex flex-col items-center uppercase text-white text-3xl font-bold"
+    >
+      <div>Pessoas</div>
+      <div>Desaparecidas</div>
+    </div>
+    <div></div>
+  </div>
 
-  }
-</div>
+  <div>
+    <mat-paginator
+      [length]="length"
+      [pageIndex]="pageIndex"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+      (page)="paginacao($event)"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
 
-<div>
-  <mat-paginator
-    [length]="length"
-    [pageIndex]="currentPage"
-    [pageSize]="pageSize"
-    (page)="paginacao($event)"
-    showFirstLastButtons
-  ></mat-paginator>
+  <div class="mt-4 mb-4"></div>
+
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 m-5"
+  >
+    @for (pessoa of listaPessoas; track $index) {
+
+    <app-card-pessoa class="mx-auto" [dadosPessoa]="pessoa"></app-card-pessoa>
+
+    }
+  </div>
+
+  <div class="mt-4 mb-4"></div>
+
+  <div class="max-h-5">
+    <mat-paginator
+      class="bg-red-500"
+      [length]="length"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+      (page)="paginacao($event)"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
 </div>
