@@ -22,7 +22,7 @@ export function getPtBRPaginatorIntl() {
   const paginatorIntl = new MatPaginatorIntl();
 
   paginatorIntl.getRangeLabel = ptBRRangeLabel;
-  paginatorIntl.itemsPerPageLabel = 'Items por página:';
+  paginatorIntl.itemsPerPageLabel = 'Fotos por página:';
   paginatorIntl.nextPageLabel = 'Avançar página';
   paginatorIntl.previousPageLabel = 'Voltar página';
   paginatorIntl.firstPageLabel = 'Voltar para primeira página';
