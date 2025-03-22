@@ -1,0 +1,58 @@
+<!-- mostra carregando enquanto nao possui dados -->
+@if (carregando) {
+<div class="mt-1">
+  <mat-progress-bar mode="query"></mat-progress-bar>
+</div>
+
+<div class="p-5 font-medium text-lg tracking-wide">
+  Buscando dados, aguarde um momento...
+</div>
+
+}
+
+<!-- lista pessoas desaparecidas -->
+@if (!carregando && listaPessoas) {
+<div>
+  <div class="w-full">
+    <mat-paginator
+      [length]="length"
+      [pageIndex]="pageIndex"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+      (page)="paginacao($event)"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
+
+  <div class="mt-4 mb-4"></div>
+
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 m-5"
+  >
+    @for (pessoa of listaPessoas; track $index) {
+
+    <app-card-pessoa class="mx-auto" [dadosPessoa]="pessoa"></app-card-pessoa>
+
+    }
+  </div>
+
+  <div class="mt-4 mb-4"></div>
+
+  <div class="w-full">
+    <mat-paginator
+      class="bg-red-500"
+      [length]="length"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+      (page)="paginacao($event)"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
+</div>
+}
+
+<!-- caso não encontre nenhuma pessoa no cadastro -->
+@if (!carregando && !length) {
+<div class="p-5">Nenhuma Pessoa Desaparecida encontrada.</div>
+}

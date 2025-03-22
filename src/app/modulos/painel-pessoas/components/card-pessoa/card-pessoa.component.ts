@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Pessoa } from '../models/pessoas.models';
-import { SharedModule } from '../shared.module';
+import { Pessoa } from '../../../../models/pessoas.models';
+import { SharedModule } from '../../../../shared/shared.module';
 
 @Component({
   selector: 'app-card-pessoa',
@@ -12,8 +12,8 @@ import { SharedModule } from '../shared.module';
 export class CardPessoaComponent {
   @Input() dadosPessoa: Pessoa = {} as Pessoa;
 
-  ngOnInit(): void {
-    if (!this.dadosPessoa.urlFoto) {
+  ngAfterContentChecked(): void {
+    if (!this.dadosPessoa.urlFoto || this.dadosPessoa.urlFoto == null) {
       if (this.dadosPessoa.sexo === 'MASCULINO') {
         this.dadosPessoa.urlFoto = 'assets/sem-foto-masculino.png';
       } else {

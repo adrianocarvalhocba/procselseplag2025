@@ -1,0 +1,28 @@
+<div class="flex flex-row justify-between items-center bg-indigo-950">
+  <div class="flex flex-col items-center p-5">
+    <div>
+      <img src="assets/logo_pjcmt.png" alt="logo-pjcmt" />
+    </div>
+
+    <div class="text-white">Polícia Judiciária Civil</div>
+    <div class="text-white">Mato Grosso</div>
+  </div>
+
+  <div
+    class="flex flex-col items-center uppercase text-white text-3xl font-bold"
+  >
+    <div>Pessoas</div>
+    <div>Desaparecidas</div>
+  </div>
+
+  <div class="flex flex-col items-center text-white p-4">
+    <div class="text-2xl font-bold">
+      {{ mostraData() }}
+    </div>
+
+    <div class="border-2 mt-2 mb-2 w-full"></div>
+
+    <div>Desaparecidos: {{ nrDesaparecidos }}</div>
+    <div>Localizados: {{ nrLocalizados }}</div>
+  </div>
+</div>

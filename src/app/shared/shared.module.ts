@@ -3,11 +3,12 @@ import {
   MatPaginatorIntl,
   MatPaginatorModule,
 } from '@angular/material/paginator';
-import { getPtBRPaginatorIntl } from './dashboard/getPtBRPaginatorIntl';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { getPtBRPaginatorIntl } from './getPtBRPaginatorIntl';
 
 @NgModule({
-  imports: [MatPaginatorModule],
-  exports: [MatPaginatorModule],
+  imports: [MatPaginatorModule, MatProgressBarModule],
+  exports: [MatPaginatorModule, MatProgressBarModule],
   providers: [{ provide: MatPaginatorIntl, useValue: getPtBRPaginatorIntl() }],
   declarations: [],
 })
