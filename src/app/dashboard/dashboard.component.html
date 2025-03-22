@@ -21,7 +21,17 @@
       <div>Pessoas</div>
       <div>Desaparecidas</div>
     </div>
-    <div></div>
+
+    <div class="flex flex-col items-center text-white">
+      <div class="text-2xl">
+        {{ mostraData() }}
+      </div>
+
+      <div class="border-2 mt-2 mb-2 w-full"></div>
+
+      <div>Desaparecidos: {{ nrDesaparecidos }}</div>
+      <div>Localizados: {{ nrLocalizados }}</div>
+    </div>
   </div>
 
   <div class="w-full">

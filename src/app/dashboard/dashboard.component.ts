@@ -2,6 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { CardPessoaComponent } from '../card-pessoa/card-pessoa.component';
+import { Estatisticas } from '../models/estatisticas.model';
 import { Pessoa, ResponsePessoas } from '../models/pessoas.models';
 import { AbitusService } from '../services/abitus.service';
 import { SharedModule } from '../shared.module';
@@ -18,6 +19,9 @@ export class DashboardComponent {
 
   listaPessoas: Pessoa[] = [];
 
+  nrLocalizados = 0;
+  nrDesaparecidos = 0;
+
   length = 0;
   pageSize = 10;
   pageIndex = 0;
@@ -30,6 +34,7 @@ export class DashboardComponent {
 
   ngOnInit(): void {
     this.carregaPessoas(this.parametros);
+    this.carregaEstatisticas();
   }
 
   paginacao(event: PageEvent): void {
@@ -49,10 +54,22 @@ export class DashboardComponent {
       next: (res: ResponsePessoas) => {
         this.listaPessoas = res.content;
         this.length = res.totalElements;
-
-        console.log('length ', this.length);
-        console.log('res', res);
       },
+    });
+  }
+
+  carregaEstatisticas() {
+    this._abitusService.buscaEstatisticas().subscribe({
+      next: (res: Estatisticas) => {
+        this.nrDesaparecidos = res.quantPessoasDesaparecidas;
+        this.nrLocalizados = res.quantPessoasEncontradas;
+      },
+    });
+  }
+
+  mostraData() {
+    return new Date(Date.now()).toLocaleDateString('pt-BR', {
+      timeZone: 'America/Cuiaba',
     });
   }
 }

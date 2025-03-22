@@ -11,4 +11,10 @@ import { SharedModule } from '../shared.module';
 })
 export class CardPessoaComponent {
   @Input() dadosPessoa: Pessoa = {} as Pessoa;
+
+  ngOnInit(): void {
+    if (!this.dadosPessoa.urlFoto) {
+      this.dadosPessoa.urlFoto = 'assets/sem-foto.png';
+    }
+  }
 }
