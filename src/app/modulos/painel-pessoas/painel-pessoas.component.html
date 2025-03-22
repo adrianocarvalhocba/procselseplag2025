@@ -12,7 +12,7 @@
 
 <!-- lista pessoas desaparecidas -->
 @if (!carregando && listaPessoas) {
-<div>
+<div class="flex flex-col justify-between h-full bg-gray-100">
   <div class="w-full">
     <mat-paginator
       [length]="length"
@@ -24,10 +24,8 @@
     ></mat-paginator>
   </div>
 
-  <div class="mt-4 mb-4"></div>
-
   <div
-    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 m-5"
+    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 m-5"
   >
     @for (pessoa of listaPessoas; track $index) {
 
@@ -36,7 +34,7 @@
     }
   </div>
 
-  <div class="mt-4 mb-4"></div>
+  <div class="flex flex-grow"></div>
 
   <div class="w-full">
     <mat-paginator
