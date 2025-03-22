@@ -14,7 +14,11 @@ export class CardPessoaComponent {
 
   ngOnInit(): void {
     if (!this.dadosPessoa.urlFoto) {
-      this.dadosPessoa.urlFoto = 'assets/sem-foto.png';
+      if (this.dadosPessoa.sexo === 'MASCULINO') {
+        this.dadosPessoa.urlFoto = 'assets/sem-foto-masculino.png';
+      } else {
+        this.dadosPessoa.urlFoto = 'assets/sem-foto-feminino.png';
+      }
     }
   }
 }

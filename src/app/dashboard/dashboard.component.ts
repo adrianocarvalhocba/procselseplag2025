@@ -25,7 +25,7 @@ export class DashboardComponent {
   length = 0;
   pageSize = 10;
   pageIndex = 0;
-  pageSizeOptions = [10, 20, 40];
+  pageSizeOptions = [10, 20, 40, 100];
   showPageSizeOptions = true;
 
   parametros = new HttpParams()
