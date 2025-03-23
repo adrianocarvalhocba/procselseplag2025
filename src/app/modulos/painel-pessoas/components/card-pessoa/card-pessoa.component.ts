@@ -12,6 +12,26 @@ import { SharedModule } from '../../../../shared/shared.module';
 export class CardPessoaComponent {
   @Input() dadosPessoa: Pessoa = {} as Pessoa;
 
+  dtLocalizacao: string = '';
+  dtDesaparecimento: string = '';
+
+  ngOnInit(): void {
+    console.log('-> ', this.dadosPessoa);
+
+    if (this.dadosPessoa.ultimaOcorrencia.dataLocalizacao) {
+      this.dtLocalizacao = this.dadosPessoa.ultimaOcorrencia.dataLocalizacao
+        .split('-')
+        .reverse()
+        .join('/');
+    }
+
+    this.dtDesaparecimento = this.dadosPessoa.ultimaOcorrencia.dtDesaparecimento
+      .split('T')[0]
+      .split('-')
+      .reverse()
+      .join('/');
+  }
+
   ngAfterContentChecked(): void {
     if (!this.dadosPessoa.urlFoto || this.dadosPessoa.urlFoto == null) {
       if (this.dadosPessoa.sexo === 'MASCULINO') {

@@ -1,20 +1,38 @@
-<div class="p-5 w-48 h-60 bg-white rounded-lg shadow-md">
+<div
+  class="p-4 w-48 h-60 bg-white rounded-lg shadow-md"
+  [ngClass]="{
+    '!bg-green-300': dadosPessoa.ultimaOcorrencia.dataLocalizacao,
+    '!bg-red-400': !dadosPessoa.ultimaOcorrencia.dataLocalizacao,
+  }"
+>
   <div class="flex justify-center">
     <img
-      mat-card-image
       class="object-cover rounded-lg h-32"
       [src]="dadosPessoa.urlFoto"
       alt="foto"
     />
   </div>
 
-  <div class="flex justify-center">
-    <div class="text-center text-xs mt-2">
+  <div class="flex flex-col items-center justify-center">
+    <div class="text-center text-xs mt-2 font-semibold tracking-widest">
       {{ dadosPessoa.nome }}
     </div>
 
-    <div></div>
+    <!-- se localizado -->
+    @if (dadosPessoa.ultimaOcorrencia.dataLocalizacao) {
+    <div class="text-center text-sm">
+      <div>Localizado em:</div>
+      {{ dtLocalizacao }}
+    </div>
+    }
 
-    <div></div>
+    <!-- se desparecido -->
+    @if (!dadosPessoa.ultimaOcorrencia.dataLocalizacao) {
+    <div class="text-center text-sm">
+      <div>Desaparecido em:</div>
+      {{ dtDesaparecimento }}
+    </div>
+
+    }
   </div>
 </div>

@@ -24,12 +24,20 @@
     ></mat-paginator>
   </div>
 
+  <div class="text-center mt-2">
+    Clique em algum card abaixo para ver mais detalhes sobre o caso:
+  </div>
+
   <div
     class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 m-5"
   >
     @for (pessoa of listaPessoas; track $index) {
 
-    <app-card-pessoa class="mx-auto" [dadosPessoa]="pessoa"></app-card-pessoa>
+    <app-card-pessoa
+      [routerLink]="['/DetalhamentoCaso', pessoa.id]"
+      class="mx-auto transition duration-300 ease-in-out hover:scale-110 hover:shadow-2xl cursor-pointer"
+      [dadosPessoa]="pessoa"
+    ></app-card-pessoa>
 
     }
   </div>
