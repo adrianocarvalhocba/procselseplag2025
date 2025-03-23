@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { DashboardComponent } from './modulos/dashboard/dashboard.component';
+import { PainelPessoasComponent } from './modulos/painel-pessoas/painel-pessoas.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'Dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: 'PainelPessoas', pathMatch: 'full' },
   {
-    path: 'Dashboard',
-    component: DashboardComponent,
+    path: 'PainelPessoas',
+    component: PainelPessoasComponent,
   },
 ];
