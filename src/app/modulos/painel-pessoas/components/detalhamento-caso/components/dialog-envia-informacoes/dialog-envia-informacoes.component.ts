@@ -3,7 +3,9 @@ import { FormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AnexaFotoComponent } from '../../../../../../shared/components/anexa-foto/anexa-foto.component';
 import { MostraFotosComponent } from '../../../../../../shared/components/mostra-fotos/mostra-fotos.component';
+import { ETipoMensagem } from '../../../../../../shared/enums';
 import { Foto } from '../../../../../../shared/models/foto.model';
+import { UtilService } from '../../../../../../shared/services/util.service';
 import { SharedModule } from '../../../../../../shared/shared.module';
 import { PainelPessoasFacade } from '../../../../painel-pessoas.facade';
 
@@ -15,6 +17,7 @@ import { PainelPessoasFacade } from '../../../../painel-pessoas.facade';
   imports: [SharedModule, MostraFotosComponent, AnexaFotoComponent],
 })
 export class DialogEnviaInformacoesComponent {
+  private readonly _utilService = inject(UtilService);
   private readonly _painelPessoasFacade = inject(PainelPessoasFacade);
   private readonly dialogRef = inject(
     MatDialogRef<DialogEnviaInformacoesComponent>
@@ -63,6 +66,30 @@ export class DialogEnviaInformacoesComponent {
   }
 
   salvaInformacoes() {
+    if (!this.formDados.get('informacoes')?.value) {
+      this._utilService.mensagem(
+        ETipoMensagem.ERROR,
+        `Campo 'Informações' não pode ser vázio!`
+      );
+      return;
+    }
+
+    if (!this.formDados.get('data')?.value) {
+      this._utilService.mensagem(
+        ETipoMensagem.ERROR,
+        `Campo 'Data' não pode ser vázio!`
+      );
+      return;
+    }
+
+    if (!this.formDados.get('descricao')?.value) {
+      this._utilService.mensagem(
+        ETipoMensagem.ERROR,
+        `Campo 'Descrição do(s) anexo(s)' não pode ser vázio!`
+      );
+      return;
+    }
+
     this._painelPessoasFacade
       .salvaInformacoes(this.formDados.getRawValue(), this.fotos)
       .subscribe({
