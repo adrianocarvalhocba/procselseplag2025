@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { SharedModule } from '../../shared/shared.module';
-import { CabecalhoComponent } from '../cabecalho/cabecalho.component';
-import { RodapeComponent } from '../rodape/rodape.component';
+import { CabecalhoComponent } from './modulos/cabecalho/cabecalho.component';
+import { RodapeComponent } from './modulos/rodape/rodape.component';
+import { SharedModule } from './shared/shared.module';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'dashboard',
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
   standalone: true,

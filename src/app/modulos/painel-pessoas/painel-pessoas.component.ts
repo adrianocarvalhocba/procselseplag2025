@@ -2,7 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Subject, takeUntil } from 'rxjs';
-import { Pessoa, ResponsePessoas } from '../../models/pessoas.models';
+import { Pessoa, ResponsePessoas } from '../../shared/models/pessoas.models';
 import { SharedModule } from '../../shared/shared.module';
 import { CardPessoaComponent } from './components/card-pessoa/card-pessoa.component';
 import { PainelPessoasFacade } from './painel-pessoas.facade';
@@ -28,11 +28,25 @@ export class PainelPessoasComponent {
 
   removeInscricao$ = new Subject<void>();
 
-  parametros = new HttpParams()
-    .set('pagina', this.pageIndex)
-    .set('porPagina', this.pageSize);
+  parametros!: HttpParams;
 
   ngOnInit(): void {
+    this.parametros = new HttpParams();
+
+    // se estiver paginado pega as configurações da pagina atual, senão valor inicial
+    let paginaSession = sessionStorage.getItem('pagina') || 0;
+    if (paginaSession) {
+      this.pageIndex = Number(paginaSession);
+      this.parametros = this.parametros.append('pagina', paginaSession);
+    }
+
+    // se estiver paginado pega as configurações da qtde por pagina, senão valor inicial
+    let porPaginaSession = sessionStorage.getItem('porPagina') || 10;
+    if (porPaginaSession) {
+      this.pageSize = Number(porPaginaSession);
+      this.parametros = this.parametros.append('porPagina', porPaginaSession);
+    }
+
     this.carregaPessoas(this.parametros);
   }
 
@@ -44,6 +58,9 @@ export class PainelPessoasComponent {
     this.parametros = new HttpParams()
       .set('pagina', this.pageIndex)
       .set('porPagina', this.pageSize);
+
+    sessionStorage.setItem('pagina', this.pageIndex.toString());
+    sessionStorage.setItem('porPagina', this.pageSize.toString());
 
     this.carregaPessoas(this.parametros);
   }
@@ -66,6 +83,11 @@ export class PainelPessoasComponent {
         },
       });
 
-    this._painelPessoasFacade.carregaListaPessoas(this.parametros);
+    this._painelPessoasFacade.carregaListaPessoas(parametros);
+  }
+
+  ngOnDestroy(): void {
+    this.removeInscricao$.next();
+    this.removeInscricao$.complete();
   }
 }

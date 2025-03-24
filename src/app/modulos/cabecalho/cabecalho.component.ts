@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { Estatisticas } from '../../models/estatisticas.model';
-import { AbitusService } from '../../services/abitus.service';
+import { Subject, takeUntil } from 'rxjs';
+import { Estatisticas } from '../../shared/models/estatisticas.model';
 import { SharedModule } from '../../shared/shared.module';
+import { CabecalhoFacade } from './cabecalho.facade';
 
 @Component({
   selector: 'app-cabecalho',
@@ -11,11 +12,13 @@ import { SharedModule } from '../../shared/shared.module';
   imports: [SharedModule],
 })
 export class CabecalhoComponent {
-  private readonly _abitusService = inject(AbitusService);
+  private readonly _cabecalhoFacade = inject(CabecalhoFacade);
 
   nrLocalizados = 0;
   nrDesaparecidos = 0;
   dataAtual = '';
+
+  removeInscricao$ = new Subject<void>();
 
   ngOnInit(): void {
     this.dataAtual = this.mostraData();
@@ -24,17 +27,26 @@ export class CabecalhoComponent {
   }
 
   carregaEstatisticas() {
-    this._abitusService.buscaEstatisticas().subscribe({
-      next: (res: Estatisticas) => {
-        this.nrDesaparecidos = res.quantPessoasDesaparecidas;
-        this.nrLocalizados = res.quantPessoasEncontradas;
-      },
-    });
+    this._cabecalhoFacade.estatisticas$
+      .pipe(takeUntil(this.removeInscricao$))
+      .subscribe({
+        next: (res: Estatisticas) => {
+          this.nrDesaparecidos = res.quantPessoasDesaparecidas;
+          this.nrLocalizados = res.quantPessoasEncontradas;
+        },
+      });
+
+    this._cabecalhoFacade.carregaEstatisticas();
   }
 
   mostraData() {
     return new Date(Date.now()).toLocaleDateString('pt-BR', {
       timeZone: 'America/Cuiaba',
     });
+  }
+
+  ngOnDestroy(): void {
+    this.removeInscricao$.next();
+    this.removeInscricao$.complete();
   }
 }

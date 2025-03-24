@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Pessoa } from '../../../../models/pessoas.models';
+import { Pessoa } from '../../../../shared/models/pessoas.models';
 import { SharedModule } from '../../../../shared/shared.module';
 
 @Component({
@@ -16,8 +16,6 @@ export class CardPessoaComponent {
   dtDesaparecimento: string = '';
 
   ngOnInit(): void {
-    console.log('-> ', this.dadosPessoa);
-
     if (this.dadosPessoa.ultimaOcorrencia.dataLocalizacao) {
       this.dtLocalizacao = this.dadosPessoa.ultimaOcorrencia.dataLocalizacao
         .split('-')

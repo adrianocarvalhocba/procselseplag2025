@@ -1,3 +1,157 @@
-<div>
-  {{ teste }}
+<div class="flex flex-col md:flex-row md:mx-auto md:w-[60rem] mt-5 p-2">
+  <!-- foto da pessoa desaparecida/localizada -->
+  <div class="flex flex-col items-center">
+    <div
+      [ngClass]="
+        !dtLocalizacao
+          ? 'text-red-300 bg-red-800 rounded-md'
+          : 'text-green-300 bg-green-900 rounded-md'
+      "
+      class="text-3xl font-bold tracking-widest uppercase p-2 text-white"
+    >
+      {{ tituloFoto }}
+    </div>
+
+    <div>
+      <img
+        [ngClass]="!dtLocalizacao ? 'border-orange-800' : 'border-green-600'"
+        [src]="dadosPessoa?.urlFoto"
+        alt="foto"
+        class="object-cover h-80 border-4 rounded-md mt-2"
+      />
+    </div>
+
+    <!-- se não foi encontrado ainda -->
+    @if (!dtLocalizacao) {
+    <div class="text-xl font-medium tracking-wide">
+      ({{ tituloFoto }} a {{ qtdeDiasDesap }} dias)
+    </div>
+    }
+
+    <!-- se já foi encontrado -->
+    @if (dtLocalizacao) {
+    <div class="text-sm md:text-xl text-white font-medium tracking-wide">
+      (Ficou desaparecido(a) por {{ qtdeDiasDesap }} dias)
+    </div>
+    }
+  </div>
+
+  <!-- informações sobre o caso  -->
+  <div class="flex flex-col mt-10 p-5 font-medium space-y-5">
+    <div>
+      <div>Nome:</div>
+
+      <div class="font-bold">{{ dadosPessoa?.nome }}</div>
+    </div>
+
+    <div>
+      <div>Sexo:</div>
+
+      <div class="font-bold">{{ dadosPessoa?.sexo }}</div>
+    </div>
+
+    <div>
+      <div>Idade:</div>
+
+      <div class="font-bold">{{ dadosPessoa?.idade }}</div>
+    </div>
+
+    <div>
+      <div>Data/Hora do Desaparecimento:</div>
+
+      <div class="font-bold">
+        {{ dtDesaparecimento }}
+      </div>
+    </div>
+
+    <div>
+      <div>Local do Desaparecimento:</div>
+
+      <div class="font-bold">
+        {{ dadosPessoa?.ultimaOcorrencia?.localDesaparecimentoConcat }}
+      </div>
+    </div>
+
+    <!-- caso desaparecido, a data -->
+    @if (dtLocalizacao) {
+    <div>
+      <div>Data da Localização:</div>
+
+      <div class="font-bold">
+        {{ dtLocalizacao }}
+      </div>
+    </div>
+    }
+
+    <!-- caso localizado, a data -->
+    @if (dtLocalizacao) {
+    <div>
+      <div>Encontrado Vivo:</div>
+
+      <div class="font-bold">
+        {{ dadosPessoa?.ultimaOcorrencia?.encontradoVivo ? "Sim" : "Não" }}
+      </div>
+    </div>
+    }
+  </div>
+</div>
+
+<!-- separador -->
+<div class="border-t mt-4 mb-4"></div>
+
+<!-- botões de ações                                         -->
+<div class="flex flex-row flex-wrap justify-center mt-2 mb-5">
+  @if (!dtLocalizacao) {
+  <div class="p-2">
+    <button
+      mat-raised-button
+      matTooltip="Envia cartaz da pessoa Desaparecida para ser postada nas Redes Sociais"
+      class="!bg-blue-800 !text-white"
+      type="button"
+      (click)="enviaLink()"
+    >
+      <mat-icon>share</mat-icon>
+      Envia Link
+    </button>
+  </div>
+
+  <div class="p-2">
+    <button
+      mat-raised-button
+      matTooltip="Acrescenta Informações da pessoa Desaparecida"
+      class="!bg-blue-800 !text-white"
+      type="button"
+      (click)="adicionaInfo()"
+    >
+      <mat-icon>add_comment</mat-icon>
+      Adic. Informação
+    </button>
+  </div>
+
+  <div class="p-2">
+    <button
+      mat-raised-button
+      matTooltip="Últimas informações sobre a pessoa Desaparecida"
+      class="!bg-blue-800 !text-white"
+      type="button"
+      (click)="ultimasInfo()"
+    >
+      <mat-icon>list</mat-icon>
+      Ult. Informações
+    </button>
+  </div>
+  }
+
+  <div class="p-2">
+    <button
+      type="button"
+      mat-raised-button
+      class="!bg-blue-800 !text-white"
+      [routerLink]="['/PainelPessoas']"
+      matTooltip="Volta para o início"
+    >
+      <mat-icon>arrow_back_ios</mat-icon>
+      Voltar
+    </button>
+  </div>
 </div>

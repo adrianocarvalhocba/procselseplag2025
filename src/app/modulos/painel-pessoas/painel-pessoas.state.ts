@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ResponsePessoas } from '../../models/pessoas.models';
+import { ResponsePessoas } from '../../shared/models/pessoas.models';
 
 @Injectable({ providedIn: 'root' })
 export class PainelPessoasState {
@@ -34,10 +34,14 @@ export class PainelPessoasState {
   }
 
   set listaPessoas(lista: ResponsePessoas) {
+    sessionStorage.setItem('lista', JSON.stringify(lista));
     this._listaPessoas$.next(lista);
   }
 
   get listaPessoas(): ResponsePessoas {
+    if (Object.keys(this._listaPessoas$.value).length === 0) {
+      this.listaPessoas = JSON.parse(sessionStorage.getItem('lista')!);
+    }
     return this._listaPessoas$.value;
   }
 }

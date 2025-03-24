@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import {
   MatPaginatorIntl,
   MatPaginatorModule,
@@ -11,6 +13,8 @@ import { getPtBRPaginatorIntl } from './getPtBRPaginatorIntl';
 @NgModule({
   imports: [
     CommonModule,
+    MatIconModule,
+    MatButtonModule,
     MatPaginatorModule,
     MatProgressBarModule,
     RouterOutlet,
@@ -18,6 +22,8 @@ import { getPtBRPaginatorIntl } from './getPtBRPaginatorIntl';
   ],
   exports: [
     CommonModule,
+    MatIconModule,
+    MatButtonModule,
     MatPaginatorModule,
     MatProgressBarModule,
     RouterOutlet,
