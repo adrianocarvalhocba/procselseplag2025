@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { ETipoMensagem } from '../../shared/enums';
 import { Foto } from '../../shared/models/foto.model';
-import { InformacoesSalvas } from '../../shared/models/informacoes-salvas.model';
 import { Pessoa, ResponsePessoas } from '../../shared/models/pessoas.model';
 import { AbitusService } from '../../shared/services/abitus.service';
 import { UtilService } from '../../shared/services/util.service';
@@ -50,24 +49,30 @@ export class PainelPessoasFacade {
     ) as Pessoa;
   }
 
-  salvaInformacoes(formDados: any, anexos: Foto[]) {
-    const resultado = new Subject<Boolean>();
+  salvaInformacoes(formDados: any, anexos: Foto[]): Observable<boolean> {
+    const resultado = new Subject<boolean>();
 
     this._abitusService.salvaInformacoes(formDados, anexos).subscribe({
-      next: (res: InformacoesSalvas) => {},
-      error: () => {
-        console.log('...');
-
+      error: (erro) => {
         this._utilService.mensagem(
           ETipoMensagem.ERROR,
-          `Erro ao salvar as informações da pessoa!`
+          `Erro ao salvar as informações da pessoa: ${erro.message}`
         );
+
+        resultado.next(false);
+        resultado.complete();
       },
-      complete: () =>
+      complete: () => {
         this._utilService.mensagem(
           ETipoMensagem.SUCCESS,
           `Informações salvas com sucesso!`
-        ),
+        );
+
+        resultado.next(true);
+        resultado.complete();
+      },
     });
+
+    return resultado;
   }
 }

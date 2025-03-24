@@ -31,26 +31,24 @@
       />
     </div>
 
-    <fieldset class="border w-full p-4 rounded-md bg-white mt-4">
+    <fieldset class="border w-full p-2 rounded-md bg-white mt-4">
       <legend class="bg-gray-200 px-2 rounded-md text-sm">
         Anexar Foto(s)/Imagem(s)
       </legend>
 
-      <div>
-        <div>
-          <mat-label> Descreva a imagem a ser anexada abaixo: </mat-label>
+      <div class="p-2">
+        <mat-label> Descreva a imagem a ser anexada abaixo: </mat-label>
 
-          <input matInput type="text" formControlName="descricao" />
-        </div>
+        <input matInput type="text" formControlName="descricao" />
+      </div>
 
-        <div class="flex flex-row">
-          <anexa-foto (fotoNova)="anexaFoto($event)"></anexa-foto>
+      <div class="flex flex-col sm:flex-row items-center justify-center mb-4">
+        <anexa-foto (fotoNova)="anexaFoto($event)"></anexa-foto>
 
-          <mostra-fotos
-            [fotosAnexadas]="fotos"
-            (removeFoto)="removeFoto($event)"
-          ></mostra-fotos>
-        </div>
+        <mostra-fotos
+          [fotosAnexadas]="fotos"
+          (removeFoto)="removeFoto($event)"
+        ></mostra-fotos>
       </div>
     </fieldset>
   </div>

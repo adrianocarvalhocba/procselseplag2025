@@ -63,9 +63,10 @@ export class DialogEnviaInformacoesComponent {
   }
 
   salvaInformacoes() {
-    this._painelPessoasFacade.salvaInformacoes(
-      this.formDados.getRawValue(),
-      this.fotos
-    );
+    this._painelPessoasFacade
+      .salvaInformacoes(this.formDados.getRawValue(), this.fotos)
+      .subscribe({
+        next: () => this.dialogRef.close(),
+      });
   }
 }
