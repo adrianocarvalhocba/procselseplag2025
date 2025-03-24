@@ -3,6 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment as env } from '../../../environments/environment';
 import { Estatisticas } from '../models/estatisticas.model';
+import { Foto } from '../models/foto.model';
+import { InformacoesSalvas } from '../models/informacoes-salvas.model';
 import { Pessoa, ResponsePessoas } from '../models/pessoas.model';
 
 @Injectable({ providedIn: 'root' })
@@ -29,24 +31,37 @@ export class AbitusService {
   }
 
   salvaInformacoes(
-    ocoId: string,
-    informacoes: string,
-    data: string,
-    descricao: string,
-    file: File
-  ): Observable<any> {
+    formDados: any,
+    anexos: Foto[]
+  ): Observable<InformacoesSalvas> {
     const formData: FormData = new FormData();
 
-    formData.append('ocoId', ocoId);
-    formData.append('informacao', informacoes);
-    formData.append('data', data);
-    formData.append('descricao', descricao);
-    formData.append('file', file);
+    console.log('anexos ', anexos);
 
-    return this._http.post<any>(
+    anexos.forEach((arquivo) => {
+      formData.append('files', arquivo.file, arquivo.file.name);
+    });
+
+    console.log('FormData entries:', Array.from((formData as any).entries()));
+
+    const arquivos = (formData as any).getAll('files');
+    arquivos.forEach((file: File) => {
+      console.log('Arquivo:', file.name, file.size, file.type);
+    });
+
+    let data = formDados.data.split('/').reverse().join('-');
+
+    let params = new HttpParams()
+      .set('informacao', formDados.informacoes)
+      .set('descricao', formDados.descricao)
+      .set('data', data)
+      .set('ocoId', formDados.ocoId);
+
+    return this._http.post<InformacoesSalvas>(
       `${env.urlAPI}/ocorrencias/informacoes-desaparecido`,
       formData,
       {
+        params,
         reportProgress: true,
         responseType: 'json',
       }

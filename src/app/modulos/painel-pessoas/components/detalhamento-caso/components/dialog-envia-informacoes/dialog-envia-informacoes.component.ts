@@ -22,7 +22,7 @@ export class DialogEnviaInformacoesComponent {
   public readonly data: any = inject(MAT_DIALOG_DATA);
   private _formBuilder = inject(FormBuilder);
 
-  form!: UntypedFormGroup;
+  formDados!: UntypedFormGroup;
   file: any;
   urlImagem: any;
   fotos: Foto[] = [];
@@ -32,11 +32,14 @@ export class DialogEnviaInformacoesComponent {
   }
 
   criaFormulario() {
-    this.form = this._formBuilder.group({
+    this.formDados = this._formBuilder.group({
       informacoes: [null],
       data: [null],
       descricao: [null],
+      ocoId: [null],
     });
+
+    this.formDados.patchValue(this.data);
   }
 
   anexaFoto(file: File) {
@@ -59,9 +62,10 @@ export class DialogEnviaInformacoesComponent {
     this.fotos.splice(index, 1);
   }
 
-  enviarInformacoes() {
-    let data = this.form.get('data')?.value.split('/').reverse().join('-');
-
-    if (data) console.log(data);
+  salvaInformacoes() {
+    this._painelPessoasFacade.salvaInformacoes(
+      this.formDados.getRawValue(),
+      this.fotos
+    );
   }
 }

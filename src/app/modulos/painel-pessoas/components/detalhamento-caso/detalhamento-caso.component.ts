@@ -90,6 +90,9 @@ export class DetalhamentoCasoComponent {
   }
 
   enviaInformacoes() {
-    this.dialog.open(DialogEnviaInformacoesComponent, { disableClose: true });
+    this.dialog.open(DialogEnviaInformacoesComponent, {
+      data: { ocoId: this.dadosPessoa.ultimaOcorrencia.ocoId },
+      disableClose: true,
+    });
   }
 }

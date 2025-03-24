@@ -9,7 +9,7 @@
 </div>
 
 <mat-dialog-content>
-  <div [formGroup]="form" class="space-y-6 text-black">
+  <div [formGroup]="formDados" class="space-y-6 text-black">
     <div>
       <mat-label>
         Caso possua informações sobre a pessoa desaparecida, informe abaixo:
@@ -67,7 +67,7 @@
         class="!bg-blue-800 !text-white"
         matTooltip="Envia dados"
         mat-stroked-button
-        (click)="enviarInformacoes()"
+        (click)="salvaInformacoes()"
       >
         <mat-icon>upload</mat-icon>
         Enviar

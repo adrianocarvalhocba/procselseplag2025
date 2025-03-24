@@ -1,8 +1,10 @@
 import { HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { ETipoMensagem } from '../../shared/enums';
+import { Foto } from '../../shared/models/foto.model';
+import { InformacoesSalvas } from '../../shared/models/informacoes-salvas.model';
 import { Pessoa, ResponsePessoas } from '../../shared/models/pessoas.model';
 import { AbitusService } from '../../shared/services/abitus.service';
 import { UtilService } from '../../shared/services/util.service';
@@ -46,5 +48,26 @@ export class PainelPessoasFacade {
     return this._painelPessoasState.listaPessoas.content.find(
       (pessoa) => pessoa.id === idPessoa
     ) as Pessoa;
+  }
+
+  salvaInformacoes(formDados: any, anexos: Foto[]) {
+    const resultado = new Subject<Boolean>();
+
+    this._abitusService.salvaInformacoes(formDados, anexos).subscribe({
+      next: (res: InformacoesSalvas) => {},
+      error: () => {
+        console.log('...');
+
+        this._utilService.mensagem(
+          ETipoMensagem.ERROR,
+          `Erro ao salvar as informações da pessoa!`
+        );
+      },
+      complete: () =>
+        this._utilService.mensagem(
+          ETipoMensagem.SUCCESS,
+          `Informações salvas com sucesso!`
+        ),
+    });
   }
 }
