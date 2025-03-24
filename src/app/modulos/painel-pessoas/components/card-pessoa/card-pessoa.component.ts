@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Pessoa } from '../../../../shared/models/pessoas.models';
+import { Pessoa } from '../../../../shared/models/pessoas.model';
 import { SharedModule } from '../../../../shared/shared.module';
 
 @Component({

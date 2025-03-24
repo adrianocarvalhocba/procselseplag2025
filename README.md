@@ -10,6 +10,7 @@
 
 - Tailwindcss
 - ngx-toastr
+- ngx-mask
 
 ### abaixo, mais informações sobre o projeto
 

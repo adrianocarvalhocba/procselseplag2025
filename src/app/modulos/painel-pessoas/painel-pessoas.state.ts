@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ResponsePessoas } from '../../shared/models/pessoas.models';
+import { ResponsePessoas } from '../../shared/models/pessoas.model';
 
 @Injectable({ providedIn: 'root' })
 export class PainelPessoasState {

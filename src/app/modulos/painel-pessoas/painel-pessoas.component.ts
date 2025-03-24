@@ -2,7 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Subject, takeUntil } from 'rxjs';
-import { Pessoa, ResponsePessoas } from '../../shared/models/pessoas.models';
+import { Pessoa, ResponsePessoas } from '../../shared/models/pessoas.model';
 import { SharedModule } from '../../shared/shared.module';
 import { CardPessoaComponent } from './components/card-pessoa/card-pessoa.component';
 import { PainelPessoasFacade } from './painel-pessoas.facade';

@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ETipoMensagem } from '../../shared/enums';
-import { Pessoa, ResponsePessoas } from '../../shared/models/pessoas.models';
+import { Pessoa, ResponsePessoas } from '../../shared/models/pessoas.model';
 import { AbitusService } from '../../shared/services/abitus.service';
 import { UtilService } from '../../shared/services/util.service';
 import { PainelPessoasState } from './painel-pessoas.state';

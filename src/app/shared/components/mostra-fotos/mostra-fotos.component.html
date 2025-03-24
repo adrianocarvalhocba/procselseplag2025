@@ -1,0 +1,15 @@
+<div class="flex flex-wrap">
+  @for (foto of fotosAnexadas; track $index) {
+  <div class="w-24 h-24 m-2 border rounded flex flex-col items-center">
+    <img
+      [src]="foto.url"
+      [alt]="'Foto ' + $index"
+      class="w-full h-full object-cover"
+    />
+
+    <button type="button" (click)="remover($index)" class="text-red-500">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+  }
+</div>

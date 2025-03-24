@@ -1,0 +1,91 @@
+<div class="flex items-center justify-between h-14 text-white !bg-blue-800">
+  <div class="text-md font-semibold ml-4 tracking-wider">
+    Envia Informações sobre o Desaparecido
+  </div>
+
+  <button mat-icon-button mat-dialog-close [tabIndex]="-1">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content>
+  <div [formGroup]="form" class="space-y-6 text-black">
+    <div>
+      <mat-label>
+        Caso possua informações sobre a pessoa desaparecida, informe abaixo:
+      </mat-label>
+
+      <input matInput type="text" formControlName="informacoes" />
+    </div>
+
+    <div>
+      <mat-label> Essas informações possuem data? informe abaixo: </mat-label>
+
+      <input
+        matInput
+        type="text"
+        formControlName="data"
+        mask="d0/M0/0000"
+        [dropSpecialCharacters]="false"
+        class="!w-40"
+      />
+    </div>
+
+    <fieldset class="border w-full p-4 rounded-md bg-white mt-4">
+      <legend class="bg-gray-200 px-2 rounded-md text-sm">
+        Anexar Foto(s)/Imagem(s)
+      </legend>
+
+      <div>
+        <div>
+          <mat-label> Descreva a imagem a ser anexada abaixo: </mat-label>
+
+          <input matInput type="text" formControlName="descricao" />
+        </div>
+
+        <div class="flex flex-row">
+          <anexa-foto (fotoNova)="anexaFoto($event)"></anexa-foto>
+
+          <mostra-fotos
+            [fotosAnexadas]="fotos"
+            (removeFoto)="removeFoto($event)"
+          ></mostra-fotos>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <div class="border-2 mt-2 mb-2"></div>
+
+  <div class="flex flex-row justify-end w-full">
+    <div class="p-2">
+      <button
+        type="button"
+        mat-raised-button
+        class="!bg-blue-800 !text-white"
+        matTooltip="Envia dados"
+        mat-stroked-button
+        (click)="enviarInformacoes()"
+      >
+        <mat-icon>upload</mat-icon>
+        Enviar
+      </button>
+    </div>
+
+    <div class="p-2">
+      <button
+        type="button"
+        mat-raised-button
+        class="!bg-blue-800 !text-white"
+        matTooltip="Fecha esta Janela"
+        mat-dialog-close
+        mat-stroked-button
+      >
+        <mat-icon>arrow_back_ios</mat-icon>
+        Voltar
+      </button>
+    </div>
+  </div>
+</mat-dialog-actions>

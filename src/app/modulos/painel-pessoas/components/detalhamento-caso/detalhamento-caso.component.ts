@@ -1,8 +1,10 @@
 import { Component, inject } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { Pessoa } from '../../../../shared/models/pessoas.models';
+import { Pessoa } from '../../../../shared/models/pessoas.model';
 import { SharedModule } from '../../../../shared/shared.module';
 import { PainelPessoasFacade } from '../../painel-pessoas.facade';
+import { DialogEnviaInformacoesComponent } from './components/dialog-envia-informacoes/dialog-envia-informacoes.component';
 
 @Component({
   selector: 'app-detalhamento-caso',
@@ -12,6 +14,7 @@ import { PainelPessoasFacade } from '../../painel-pessoas.facade';
   imports: [SharedModule],
 })
 export class DetalhamentoCasoComponent {
+  private readonly dialog = inject(MatDialog);
   private readonly _route = inject(ActivatedRoute);
   private readonly _painelPessoasFacade = inject(PainelPessoasFacade);
 
@@ -86,15 +89,7 @@ export class DetalhamentoCasoComponent {
     }
   }
 
-  adicionaInfo() {
-    //
-  }
-
-  ultimasInfo() {
-    //
-  }
-
-  enviaLink() {
-    //
+  enviaInformacoes() {
+    this.dialog.open(DialogEnviaInformacoesComponent, { disableClose: true });
   }
 }
