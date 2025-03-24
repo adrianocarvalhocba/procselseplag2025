@@ -36,17 +36,8 @@ export class AbitusService {
   ): Observable<InformacoesSalvas> {
     const formData: FormData = new FormData();
 
-    console.log('anexos ', anexos);
-
     anexos.forEach((arquivo) => {
       formData.append('files', arquivo.file, arquivo.file.name);
-    });
-
-    console.log('FormData entries:', Array.from((formData as any).entries()));
-
-    const arquivos = (formData as any).getAll('files');
-    arquivos.forEach((file: File) => {
-      console.log('Arquivo:', file.name, file.size, file.type);
     });
 
     let data = formDados.data.split('/').reverse().join('-');
