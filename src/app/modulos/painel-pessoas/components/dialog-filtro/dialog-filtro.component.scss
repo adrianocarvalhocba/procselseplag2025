@@ -1,0 +1,12 @@
+input {
+  @apply uppercase pt-6 pb-6 pl-2 pr-2 h-8 border border-gray-300 rounded-lg block w-full text-sm text-gray-900 bg-white;
+}
+
+
+mat-select {
+  @apply uppercase p-3 h-12 border border-gray-300 rounded-lg block w-full text-sm text-gray-900 bg-white;
+}
+
+mat-label {
+  @apply font-medium text-black;
+}

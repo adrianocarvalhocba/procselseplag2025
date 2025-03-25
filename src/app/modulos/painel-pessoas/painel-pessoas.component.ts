@@ -1,10 +1,12 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { Subject, takeUntil } from 'rxjs';
 import { Pessoa, ResponsePessoas } from '../../shared/models/pessoas.model';
 import { SharedModule } from '../../shared/shared.module';
 import { CardPessoaComponent } from './components/card-pessoa/card-pessoa.component';
+import { DialogFiltroComponent } from './components/dialog-filtro/dialog-filtro.component';
 import { PainelPessoasFacade } from './painel-pessoas.facade';
 
 @Component({
@@ -15,6 +17,7 @@ import { PainelPessoasFacade } from './painel-pessoas.facade';
   imports: [SharedModule, CardPessoaComponent],
 })
 export class PainelPessoasComponent {
+  private readonly dialog = inject(MatDialog);
   private readonly _painelPessoasFacade = inject(PainelPessoasFacade);
 
   length = 0;
@@ -25,6 +28,7 @@ export class PainelPessoasComponent {
 
   carregando!: boolean;
   listaPessoas: Pessoa[] = [];
+  filtrando: boolean = false;
 
   removeInscricao$ = new Subject<void>();
 
@@ -84,6 +88,31 @@ export class PainelPessoasComponent {
       });
 
     this._painelPessoasFacade.carregaListaPessoas(parametros);
+  }
+
+  mostraFiltro() {
+    const dialogRef = this.dialog.open(DialogFiltroComponent, {
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: (retorno) => {
+        this.filtrando = retorno;
+      },
+    });
+  }
+
+  limpaFiltro() {
+    this.filtrando = false;
+
+    this.parametros = new HttpParams()
+      .set('pagina', this.pageIndex)
+      .set('porPagina', this.pageSize);
+
+    sessionStorage.setItem('pagina', this.pageIndex.toString());
+    sessionStorage.setItem('porPagina', this.pageSize.toString());
+
+    this._painelPessoasFacade.carregaListaPessoas(this.parametros);
   }
 
   ngOnDestroy(): void {

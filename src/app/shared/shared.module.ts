@@ -11,6 +11,7 @@ import {
   MatPaginatorModule,
 } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSelectModule } from '@angular/material/select';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { getPtBRPaginatorIntl } from './getPtBRPaginatorIntl';
@@ -27,6 +28,7 @@ import { getPtBRPaginatorIntl } from './getPtBRPaginatorIntl';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatDialogModule,
+    MatSelectModule,
     FormsModule,
     RouterOutlet,
     RouterModule,
@@ -45,6 +47,7 @@ import { getPtBRPaginatorIntl } from './getPtBRPaginatorIntl';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatDialogModule,
+    MatSelectModule,
     FormsModule,
     RouterOutlet,
     RouterModule,

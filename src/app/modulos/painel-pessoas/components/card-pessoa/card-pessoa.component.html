@@ -1,5 +1,5 @@
 <div
-  class="p-4 w-48 h-60 bg-white rounded-lg shadow-md"
+  class="p-4 w-48 h-60 bg-white rounded-lg shadow-md uppercase"
   [ngClass]="{
     '!bg-green-300': dadosPessoa.ultimaOcorrencia.dataLocalizacao,
     '!bg-red-400': !dadosPessoa.ultimaOcorrencia.dataLocalizacao,
@@ -14,13 +14,13 @@
   </div>
 
   <div class="flex flex-col items-center justify-center">
-    <div class="text-center text-xs mt-2 font-semibold tracking-widest">
+    <div class="text-center text-sm mt-2 font-semibold tracking-widest">
       {{ dadosPessoa.nome }}
     </div>
 
     <!-- se localizado -->
     @if (dadosPessoa.ultimaOcorrencia.dataLocalizacao) {
-    <div class="text-center text-sm">
+    <div class="text-center text-xs">
       <div>Localizado em:</div>
       {{ dtLocalizacao }}
     </div>
@@ -28,7 +28,7 @@
 
     <!-- se desparecido -->
     @if (!dadosPessoa.ultimaOcorrencia.dataLocalizacao) {
-    <div class="text-center text-sm">
+    <div class="text-center text-xs">
       <div>Desaparecido em:</div>
       {{ dtDesaparecimento }}
     </div>

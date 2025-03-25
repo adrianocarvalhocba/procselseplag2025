@@ -1,0 +1,108 @@
+<div class="flex items-center justify-between h-14 text-white !bg-blue-800">
+  <div class="text-md font-semibold ml-4 tracking-wider">Filtro</div>
+
+  <button mat-icon-button mat-dialog-close [tabIndex]="-1">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content>
+  <div [formGroup]="formFiltro" class="space-y-6 min-w-96 text-black">
+    <div>
+      <mat-label> Nome: </mat-label>
+
+      <input
+        matInput
+        type="text"
+        formControlName="nome"
+        placeholder="Digite partes do nome para filtrar"
+      />
+    </div>
+
+    <div>
+      <mat-label> Sexo: </mat-label>
+
+      <mat-select
+        formControlName="sexo"
+        placeholder="Escolha um sexo para filtrar"
+      >
+        @for (sexo of listaSexo; track $index) {
+        <mat-option [value]="sexo" class="uppercase">
+          {{ sexo.descricao }}
+        </mat-option>
+        }
+      </mat-select>
+    </div>
+
+    <div>
+      <mat-label> Idade Inicial: </mat-label>
+
+      <input
+        matInput
+        type="text"
+        formControlName="faixaIdadeInicial"
+        mask="999"
+        placeholder="Digite algum valor de idade para filtrar"
+      />
+    </div>
+
+    <div>
+      <mat-label> Idade Final: </mat-label>
+
+      <input
+        matInput
+        type="text"
+        formControlName="faixaIdadeFinal"
+        mask="999"
+        placeholder="Digite algum valor de idade para filtrar"
+      />
+    </div>
+
+    <div>
+      <mat-label> Situação: </mat-label>
+
+      <mat-select
+        formControlName="status"
+        placeholder="Escolha uma situação para filtrar"
+      >
+        @for (situacao of listaSituacoes; track $index) {
+        <mat-option [value]="situacao" class="uppercase">
+          {{ situacao.descricao }}
+        </mat-option>
+        }
+      </mat-select>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <div class="border-2 mt-2 mb-2"></div>
+
+  <div class="flex flex-row justify-end w-full">
+    <div class="flex flex-row justify-center items-center ml-5">
+      <button
+        type="button"
+        mat-raised-button
+        class="!bg-blue-800 !text-white hover:!bg-blue-600"
+        (click)="aplicaFiltro()"
+      >
+        <mat-icon>filter_alt</mat-icon>
+        Aplica Filtro
+      </button>
+    </div>
+
+    <div class="p-2">
+      <button
+        type="button"
+        mat-raised-button
+        class="!bg-blue-800 !text-white hover:!bg-blue-600"
+        matTooltip="Fecha esta Janela"
+        mat-dialog-close
+        mat-stroked-button
+      >
+        <mat-icon>arrow_back_ios</mat-icon>
+        Voltar
+      </button>
+    </div>
+  </div>
+</mat-dialog-actions>
