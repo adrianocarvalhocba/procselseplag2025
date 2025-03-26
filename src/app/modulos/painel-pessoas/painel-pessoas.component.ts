@@ -39,21 +39,18 @@ export class PainelPessoasComponent {
   ngOnInit(): void {
     this.parametros = new HttpParams();
 
-    // se estiver paginado pega as configurações da pagina atual, senão valor inicial
     let paginaSession = sessionStorage.getItem('pagina') || 0;
     if (paginaSession) {
       this.pageIndex = Number(paginaSession);
       this.parametros = this.parametros.append('pagina', paginaSession);
     }
 
-    // se estiver paginado pega as configurações da qtde por pagina, senão valor inicial
     let porPaginaSession = sessionStorage.getItem('porPagina') || 10;
     if (porPaginaSession) {
       this.pageSize = Number(porPaginaSession);
       this.parametros = this.parametros.append('porPagina', porPaginaSession);
     }
 
-    // se inscreve no state de carregando a lista de pessoas para saber quando ja terminou
     this._painelPessoasFacade.carregandoListaPessoas$
       .pipe(takeUntil(this.removeInscricao$))
       .subscribe({
@@ -62,7 +59,6 @@ export class PainelPessoasComponent {
         },
       });
 
-    // se inscreve no state de carregando a lista de pessoas para saber quando ja terminou
     this._painelPessoasFacade.listaPessoas$
       .pipe(takeUntil(this.removeInscricao$))
       .subscribe({
@@ -71,6 +67,39 @@ export class PainelPessoasComponent {
           this.length = listaPessoas.totalElements;
         },
       });
+
+    let filtroString = sessionStorage.getItem('filtro');
+    let filtro: any = filtroString ? JSON.parse(filtroString) : {};
+
+    if (Object.keys(filtro).length > 0) {
+      this.filtrando = true;
+    }
+
+    if (filtro.nome) {
+      this.parametros = this.parametros.append('nome', filtro.nome);
+    }
+
+    if (filtro?.sexo?.value) {
+      this.parametros = this.parametros.append('sexo', filtro.sexo.value);
+    }
+
+    if (filtro.faixaIdadeInicial) {
+      this.parametros = this.parametros.append(
+        'faixaIdadeInicial',
+        filtro.faixaIdadeInicial
+      );
+    }
+
+    if (filtro.faixaIdadeFinal) {
+      this.parametros = this.parametros.append(
+        'faixaIdadeFinal',
+        filtro.faixaIdadeFinal
+      );
+    }
+
+    if (filtro?.status?.value) {
+      this.parametros = this.parametros.append('status', filtro.status.value);
+    }
 
     this._painelPessoasFacade.carregaListaPessoas(this.parametros);
   }
@@ -126,7 +155,7 @@ export class PainelPessoasComponent {
 
     dialogRef.afterClosed().subscribe({
       next: (retorno) => {
-        this.filtrando = retorno;
+        if (!this.filtrando && retorno) this.filtrando = retorno;
       },
     });
   }
