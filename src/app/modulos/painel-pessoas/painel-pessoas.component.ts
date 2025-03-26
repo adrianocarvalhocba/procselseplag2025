@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Subject, takeUntil } from 'rxjs';
 import { Pessoa, ResponsePessoas } from '../../shared/models/pessoas.model';
 import { SharedModule } from '../../shared/shared.module';
@@ -17,6 +17,8 @@ import { PainelPessoasFacade } from './painel-pessoas.facade';
   imports: [SharedModule, CardPessoaComponent],
 })
 export class PainelPessoasComponent {
+  @ViewChild(MatPaginator) matPaginator!: MatPaginator;
+
   private readonly dialog = inject(MatDialog);
   private readonly _painelPessoasFacade = inject(PainelPessoasFacade);
 
@@ -51,7 +53,26 @@ export class PainelPessoasComponent {
       this.parametros = this.parametros.append('porPagina', porPaginaSession);
     }
 
-    this.carregaPessoas(this.parametros);
+    // se inscreve no state de carregando a lista de pessoas para saber quando ja terminou
+    this._painelPessoasFacade.carregandoListaPessoas$
+      .pipe(takeUntil(this.removeInscricao$))
+      .subscribe({
+        next: (carregando: boolean) => {
+          this.carregando = carregando;
+        },
+      });
+
+    // se inscreve no state de carregando a lista de pessoas para saber quando ja terminou
+    this._painelPessoasFacade.listaPessoas$
+      .pipe(takeUntil(this.removeInscricao$))
+      .subscribe({
+        next: (listaPessoas: ResponsePessoas) => {
+          this.listaPessoas = listaPessoas.content;
+          this.length = listaPessoas.totalElements;
+        },
+      });
+
+    this._painelPessoasFacade.carregaListaPessoas(this.parametros);
   }
 
   paginacao(event: PageEvent): void {
@@ -66,28 +87,36 @@ export class PainelPessoasComponent {
     sessionStorage.setItem('pagina', this.pageIndex.toString());
     sessionStorage.setItem('porPagina', this.pageSize.toString());
 
-    this.carregaPessoas(this.parametros);
-  }
+    let filtroString = sessionStorage.getItem('filtro');
+    let filtro: any = filtroString ? JSON.parse(filtroString) : {};
 
-  carregaPessoas(parametros: HttpParams) {
-    this._painelPessoasFacade.carregandoListaPessoas$
-      .pipe(takeUntil(this.removeInscricao$))
-      .subscribe({
-        next: (carregando: boolean) => {
-          this.carregando = carregando;
-        },
-      });
+    if (filtro.nome) {
+      this.parametros = this.parametros.append('nome', filtro.nome);
+    }
 
-    this._painelPessoasFacade.listaPessoas$
-      .pipe(takeUntil(this.removeInscricao$))
-      .subscribe({
-        next: (listaPessoas: ResponsePessoas) => {
-          this.listaPessoas = listaPessoas.content;
-          this.length = listaPessoas.totalElements;
-        },
-      });
+    if (filtro?.sexo?.value) {
+      this.parametros = this.parametros.append('sexo', filtro.sexo.value);
+    }
 
-    this._painelPessoasFacade.carregaListaPessoas(parametros);
+    if (filtro.faixaIdadeInicial) {
+      this.parametros = this.parametros.append(
+        'faixaIdadeInicial',
+        filtro.faixaIdadeInicial
+      );
+    }
+
+    if (filtro.faixaIdadeFinal) {
+      this.parametros = this.parametros.append(
+        'faixaIdadeFinal',
+        filtro.faixaIdadeFinal
+      );
+    }
+
+    if (filtro?.status?.value) {
+      this.parametros = this.parametros.append('status', filtro.status.value);
+    }
+
+    this._painelPessoasFacade.carregaListaPessoas(this.parametros);
   }
 
   mostraFiltro() {
@@ -104,6 +133,8 @@ export class PainelPessoasComponent {
 
   limpaFiltro() {
     this.filtrando = false;
+    sessionStorage.clear();
+    this.matPaginator.firstPage();
 
     this.parametros = new HttpParams()
       .set('pagina', this.pageIndex)

@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, UntypedFormGroup } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ISexo, ISituacao } from '../../../../shared/models/filtro.model';
 import { SharedModule } from '../../../../shared/shared.module';
 import { PainelPessoasFacade } from '../../painel-pessoas.facade';
@@ -16,6 +16,7 @@ import { PainelPessoasFacade } from '../../painel-pessoas.facade';
 export class DialogFiltroComponent {
   private readonly _painelPessoasFacade = inject(PainelPessoasFacade);
   private readonly dialogRef = inject(MatDialogRef<DialogFiltroComponent>);
+  public readonly data = inject(MAT_DIALOG_DATA);
   private _formBuilder = inject(FormBuilder);
 
   formFiltro!: UntypedFormGroup;
@@ -42,34 +43,65 @@ export class DialogFiltroComponent {
       faixaIdadeFinal: [null],
       status: [null],
     });
+
+    let filtroString = sessionStorage.getItem('filtro');
+    let filtro: any = filtroString ? JSON.parse(filtroString) : {};
+
+    this.formFiltro.patchValue(filtro);
+
+    if (filtro?.sexo?.value) {
+      this.formFiltro
+        .get('sexo')
+        ?.setValue(
+          this.listaSexo.find((item) => item.value === filtro.sexo.value)
+        );
+    }
+
+    if (filtro?.status?.value) {
+      this.formFiltro
+        .get('status')
+        ?.setValue(
+          this.listaSituacoes.find((item) => item.value === filtro.status.value)
+        );
+    }
   }
 
   aplicaFiltro() {
+    sessionStorage.clear();
+
     let parametros = new HttpParams();
 
-    let nome = this.formFiltro.get('nome')!.value;
-    if (nome) {
-      parametros = parametros.append('nome', nome);
+    let filtro = {
+      nome: this.formFiltro.get('nome')!.value,
+      sexo: this.formFiltro.get('sexo')!.value,
+      faixaIdadeInicial: this.formFiltro.get('faixaIdadeInicial')!.value,
+      faixaIdadeFinal: this.formFiltro.get('faixaIdadeFinal')!.value,
+      status: this.formFiltro.get('status')!.value,
+    };
+
+    sessionStorage.setItem('filtro', JSON.stringify(filtro));
+
+    if (filtro.nome) {
+      parametros = parametros.append('nome', filtro.nome);
     }
 
-    let sexo = this.formFiltro.get('sexo')!.value;
-    if (sexo) {
-      parametros = parametros.append('sexo', sexo.value);
+    if (filtro.sexo) {
+      parametros = parametros.append('sexo', filtro.sexo.value);
     }
 
-    let faixaIdadeInicial = this.formFiltro.get('faixaIdadeInicial')!.value;
-    if (faixaIdadeInicial) {
-      parametros = parametros.append('faixaIdadeInicial', faixaIdadeInicial);
+    if (filtro.faixaIdadeInicial) {
+      parametros = parametros.append(
+        'faixaIdadeInicial',
+        filtro.faixaIdadeInicial
+      );
     }
 
-    let faixaIdadeFinal = this.formFiltro.get('faixaIdadeFinal')!.value;
-    if (faixaIdadeFinal) {
-      parametros = parametros.append('faixaIdadeFinal', faixaIdadeFinal);
+    if (filtro.faixaIdadeFinal) {
+      parametros = parametros.append('faixaIdadeFinal', filtro.faixaIdadeFinal);
     }
 
-    let status = this.formFiltro.get('status')!.value;
-    if (status) {
-      parametros = parametros.append('status', status.value);
+    if (filtro.status) {
+      parametros = parametros.append('status', filtro.status.value);
     }
 
     this._painelPessoasFacade.carregaListaPessoas(parametros);
