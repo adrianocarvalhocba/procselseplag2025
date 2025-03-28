@@ -18,16 +18,22 @@
 
 # COMO RODAR O CONTAINER PARA TESTAR
 
-### Com a ferramenta docker instalada na maquina, basta baixar a imagem do dockerhub por meio do comando:
+### Com a ferramenta docker instalada na maquina, basta clonar o projeto na maquina:
 
 ```
-docker pull adrianocarvalhocba/procselseplag2025
+git clone https://github.com/adrianocarvalhocba/procselseplag2025.git
 ```
 
-### Assim que terminar de baixar, execute o comando abaixo para levantar o container:
+### Assim que terminar de baixar, entre na pasta procselseplag2025 e execute o comando abaixo para carregar a imagem do container:
 
 ```
-docker container run -d -it -p 80:80 adrianocarvalhocba/procselseplag2025
+docker load -i procselseplag2025.tar
+```
+
+### Agora execute o comando abaixo para levantar o container:
+
+```
+docker container run -d -it -p 80:80 procselseplag2025
 ```
 
 ### Para testar, na maquina rodando o container, abra qualquer navegador é digite na Url:
