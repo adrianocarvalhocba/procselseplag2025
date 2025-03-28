@@ -1,10 +1,12 @@
-# PROCESSO SELETIVO PJCMT 2025
+# PROCESSO SELETIVO SEPLAG 2025
 
-## Nome: Adriano Afonso de Almeida Carvalho
+### Nome: **Adriano Afonso de Almeida Carvalho**
 
-## Projeto Prático de Implementação de Front-End
+### CPF: **452.844.901-34**
 
-### Framework usado: ** Angular 17 **
+### Vaga: FrontEnd Senior
+
+### Framework usado: **Angular 17**
 
 ### Bibliotecas:
 
@@ -12,6 +14,24 @@
 - ngx-toastr
 - ngx-mask
 
-### abaixo, mais informações sobre o projeto
-
 ---
+
+# COMO RODAR O CONTAINER PARA TESTAR
+
+### Com a ferramenta docker instalada na maquina, basta baixar a imagem do dockerhub por meio do comando:
+
+```
+docker pull adrianocarvalhocba/procselseplag2025
+```
+
+### Assim que terminar de baixar, execute o comando abaixo para levantar o container:
+
+```
+docker container run -d -it -p 80:80 adrianocarvalhocba/procselseplag2025
+```
+
+### Para testar, na maquina rodando o container, abra qualquer navegador é digite na Url:
+
+**http://localhost**
+ou
+**http://127.0.0.1**

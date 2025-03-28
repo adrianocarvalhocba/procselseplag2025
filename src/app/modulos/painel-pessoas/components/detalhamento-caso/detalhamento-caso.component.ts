@@ -54,23 +54,16 @@ export class DetalhamentoCasoComponent {
     this.qtdeDiasDesap = Math.round(diffInMs / (1000 * 60 * 60 * 24));
 
     // converte a data/hora do desaparecimento
-    this.dtDesaparecimento =
-      new Date(this.dtDesaparecimento).toLocaleDateString('pt-BR', {
-        timeZone: 'America/Cuiaba',
-      }) +
-      ' - ' +
-      new Date(this.dtDesaparecimento).toLocaleTimeString('pt-BR', {
-        timeZone: 'America/Cuiaba',
-      });
+    let aux = this.dadosPessoa.ultimaOcorrencia.dtDesaparecimento.split('T');
+    this.dtDesaparecimento = aux[0].split('-').reverse().join('/');
+    this.dtDesaparecimento += ' - ' + aux[1];
 
     // converte a data da localização
     if (this.dtLocalizacao) {
-      this.dtLocalizacao = new Date(this.dtLocalizacao).toLocaleDateString(
-        'pt-BR',
-        {
-          timeZone: 'America/Cuiaba',
-        }
-      );
+      this.dtLocalizacao = this.dadosPessoa.ultimaOcorrencia.dataLocalizacao
+        .split('-')
+        .reverse()
+        .join('/');
     }
 
     // cria o titulo da foto: Localizado ou Desaparecido

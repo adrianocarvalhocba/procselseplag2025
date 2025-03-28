@@ -1,12 +1,10 @@
 {
-  "name": "selpjc2025",
+  "name": "procselseplag2025",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
+    "ng": "ng serve --configuration development",
     "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "build": "ng build --configuration production"
   },
   "private": true,
   "dependencies": {

@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
 
-  urlAPI: 'https://dev.pjc.mt.gov.br/api-desaparecidos/v1',
+  // urlAPI: 'https://abitus-api.pjc.mt.gov.br/v1',
+  urlAPI: 'https://abitus-api.geia.vip/v1',
 };
