@@ -46,8 +46,8 @@ docker container run -d -it -p 80:80 procselseplag2025
 
 ### 5. Teste a aplicação
 
-#### Abra um navegador na máquina que está executando o container e acesse:
+Com os passos acima feitos, clique em qualquer link abaixo para abrir um navegador na máquina e mostrar a aplicação rodando:
 
-**http://localhost**
-ou
-**http://127.0.0.1**
+[http://localhost](http://localhost)  
+**ou**  
+[http://127.0.0.1](http://127.0.0.1)
