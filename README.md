@@ -16,27 +16,37 @@
 
 ---
 
-# COMO RODAR O CONTAINER PARA TESTAR
+# COMO EXECUTAR O CONTAINER PARA TESTES
 
-### Com a ferramenta docker instalada na maquina, basta clonar o projeto na maquina:
+Com o Docker instalado em sua máquina, siga os passos abaixo:
+
+### 1. Clone o repositório
 
 ```
 git clone https://github.com/adrianocarvalhocba/procselseplag2025.git
 ```
 
-### Assim que terminar de baixar, entre na pasta procselseplag2025 e execute o comando abaixo para carregar a imagem do container:
+### 2. Acesse o diretório do projeto
+
+```
+cd procselseplag2025
+```
+
+### 3. Carregue a imagem do container
 
 ```
 docker load -i procselseplag2025.tar
 ```
 
-### Agora execute o comando abaixo para levantar o container:
+### 4. Inicie o container
 
 ```
 docker container run -d -it -p 80:80 procselseplag2025
 ```
 
-### Para testar, na maquina rodando o container, abra qualquer navegador é digite na Url:
+### 5. Teste a aplicação
+
+#### Abra um navegador na máquina que está executando o container e acesse:
 
 **http://localhost**
 ou
