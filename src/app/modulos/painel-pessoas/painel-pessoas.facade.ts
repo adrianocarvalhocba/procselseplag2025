@@ -1,6 +1,5 @@
 import { HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { ETipoMensagem } from '../../shared/enums';
 import { Foto } from '../../shared/models/foto.model';
@@ -11,7 +10,6 @@ import { PainelPessoasState } from './painel-pessoas.state';
 
 @Injectable({ providedIn: 'root' })
 export class PainelPessoasFacade {
-  private readonly _router = inject(Router);
   private readonly _abitusService = inject(AbitusService);
   private readonly _painelPessoasState = inject(PainelPessoasState);
   private readonly _utilService = inject(UtilService);

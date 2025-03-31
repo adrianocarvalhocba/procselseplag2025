@@ -2,7 +2,9 @@ import { HttpParams } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ETipoMensagem } from '../../../../shared/enums';
 import { ISexo, ISituacao } from '../../../../shared/models/filtro.model';
+import { UtilService } from '../../../../shared/services/util.service';
 import { SharedModule } from '../../../../shared/shared.module';
 import { PainelPessoasFacade } from '../../painel-pessoas.facade';
 
@@ -18,6 +20,7 @@ export class DialogFiltroComponent {
   private readonly dialogRef = inject(MatDialogRef<DialogFiltroComponent>);
   public readonly data = inject(MAT_DIALOG_DATA);
   private _formBuilder = inject(FormBuilder);
+  private readonly _utilService = inject(UtilService);
 
   formFiltro!: UntypedFormGroup;
 
@@ -67,10 +70,6 @@ export class DialogFiltroComponent {
   }
 
   aplicaFiltro() {
-    sessionStorage.clear();
-
-    let parametros = new HttpParams();
-
     let filtro = {
       nome: this.formFiltro.get('nome')!.value,
       sexo: this.formFiltro.get('sexo')!.value,
@@ -79,7 +78,25 @@ export class DialogFiltroComponent {
       status: this.formFiltro.get('status')!.value,
     };
 
+    if (
+      filtro.nome === null &&
+      filtro.sexo === null &&
+      filtro.faixaIdadeInicial === null &&
+      filtro.faixaIdadeFinal === null &&
+      filtro.status === null
+    ) {
+      this._utilService.mensagem(
+        ETipoMensagem.ERROR,
+        `Para filtrar algum valor precisa ser informado!`
+      );
+      return;
+    }
+
+    sessionStorage.clear();
+
     sessionStorage.setItem('filtro', JSON.stringify(filtro));
+
+    let parametros = new HttpParams();
 
     if (filtro.nome) {
       parametros = parametros.append('nome', filtro.nome);
