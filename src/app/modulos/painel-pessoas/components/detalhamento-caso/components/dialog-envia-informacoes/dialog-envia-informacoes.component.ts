@@ -69,7 +69,7 @@ export class DialogEnviaInformacoesComponent {
     if (!this.formDados.get('informacoes')?.value) {
       this._utilService.mensagem(
         ETipoMensagem.ERROR,
-        `Campo 'Informações' não pode ser vázio!`
+        `Campo 'Informações' não pode ser vazio!`
       );
       return;
     }
@@ -77,7 +77,7 @@ export class DialogEnviaInformacoesComponent {
     if (!this.formDados.get('data')?.value) {
       this._utilService.mensagem(
         ETipoMensagem.ERROR,
-        `Campo 'Data' não pode ser vázio!`
+        `Campo 'Data' não pode ser vazio!`
       );
       return;
     }
@@ -85,7 +85,7 @@ export class DialogEnviaInformacoesComponent {
     if (!this.formDados.get('descricao')?.value) {
       this._utilService.mensagem(
         ETipoMensagem.ERROR,
-        `Campo 'Descrição do(s) anexo(s)' não pode ser vázio!`
+        `Campo 'Descrição do(s) anexo(s)' não pode ser vazio!`
       );
       return;
     }
