@@ -1,11 +1,11 @@
 <div
-  class="p-3 w-48 h-60 bg-white rounded-lg shadow-md uppercase"
+  class="p-3 w-72 h-60 bg-white rounded-lg shadow-md uppercase"
   [ngClass]="{
     '!bg-green-300': dadosPessoa.ultimaOcorrencia.dataLocalizacao,
     '!bg-red-400': !dadosPessoa.ultimaOcorrencia.dataLocalizacao,
   }"
 >
-  <div class="flex justify-center">
+  <div class="flex justify-center -mt-2">
     <img
       class="object-cover rounded-lg h-32"
       [src]="dadosPessoa.urlFoto"
@@ -21,16 +21,26 @@
     <!-- se localizado -->
     @if (dadosPessoa.ultimaOcorrencia.dataLocalizacao) {
     <div class="text-center text-xs">
-      <div>Localização em:</div>
+      Localização em:
       {{ dtLocalizacao }}
+    </div>
+
+    <div class="text-center text-xs">
+      Encontrado Vivo:
+      {{ dadosPessoa.ultimaOcorrencia.encontradoVivo ? "SIM" : "NÃO" }}
     </div>
     }
 
     <!-- se desparecido -->
     @if (!dadosPessoa.ultimaOcorrencia.dataLocalizacao) {
     <div class="text-center text-xs">
-      <div>Desaparecimento em:</div>
+      Desaparecimento em:
       {{ dtDesaparecimento }}
+    </div>
+
+    <div class="text-center text-xs">
+      Local:
+      {{ dadosPessoa.ultimaOcorrencia.localDesaparecimentoConcat }}
     </div>
 
     }
