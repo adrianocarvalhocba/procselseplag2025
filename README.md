@@ -16,35 +16,43 @@
 
 ---
 
-# COMO EXECUTAR O CONTAINER PARA TESTES
+# COMO EXECUTAR A APLICAÇÃO PARA TESTES
+
+## 1. Sem Docker instalado
+
+Acesse o endereço http://adrianocarvalhocba.github.io
+
+## 2. Com Docker instalado usando a imagem que esta salva no dockerhub
 
 Com o Docker instalado em sua máquina, siga os passos abaixo:
 
-### 1. Clone o repositório
+## 3. Com Docker instalado usando a imagem que esta salva no respositório do projeto
+
+### a. Clone o repositório
 
 ```
 git clone https://github.com/adrianocarvalhocba/procselseplag2025.git
 ```
 
-### 2. Acesse o diretório do projeto
+### b. Acesse o diretório do projeto
 
 ```
 cd procselseplag2025
 ```
 
-### 3. Carregue a imagem do container
+### c. Carregue a imagem do container
 
 ```
 docker load -i procselseplag2025.tar
 ```
 
-### 4. Inicie o container
+### d. Inicie o container
 
 ```
 docker container run -d -it -p 80:80 procselseplag2025
 ```
 
-### 5. Teste a aplicação
+### e. Teste a aplicação
 
 Com os passos acima feitos, clique em qualquer link abaixo para abrir um navegador na máquina e mostrar a aplicação rodando:
 
