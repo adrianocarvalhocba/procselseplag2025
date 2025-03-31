@@ -30,6 +30,15 @@ export class CardPessoaComponent {
       .join('/');
   }
 
+  onErroCarregarImagem(event: Event) {
+    const target = event.target as HTMLImageElement;
+    if (this.dadosPessoa.sexo === 'MASCULINO') {
+      target.src = 'assets/sem-foto-masculino.png';
+    } else {
+      target.src = 'assets/sem-foto-feminino.png';
+    }
+  }
+
   ngAfterContentChecked(): void {
     if (!this.dadosPessoa.urlFoto || this.dadosPessoa.urlFoto == null) {
       if (this.dadosPessoa.sexo === 'MASCULINO') {

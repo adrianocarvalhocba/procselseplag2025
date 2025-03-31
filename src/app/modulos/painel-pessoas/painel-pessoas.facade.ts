@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { ETipoMensagem } from '../../shared/enums';
 import { Foto } from '../../shared/models/foto.model';
 import { Pessoa, ResponsePessoas } from '../../shared/models/pessoas.model';
@@ -17,6 +17,8 @@ export class PainelPessoasFacade {
   carregandoListaPessoas$!: Observable<boolean>;
   listaPessoas$!: Observable<ResponsePessoas>;
 
+  removeInscricao$ = new Subject<void>();
+
   constructor() {
     this.carregandoListaPessoas$ =
       this._painelPessoasState.carregandoListaPessoas$;
@@ -26,19 +28,22 @@ export class PainelPessoasFacade {
   carregaListaPessoas(parametros: HttpParams) {
     this._painelPessoasState.carregandoListaPessoas = true;
 
-    this._abitusService.listaPessoas(parametros).subscribe({
-      next: (res: ResponsePessoas) => {
-        this._painelPessoasState.listaPessoas = res;
-      },
-      error: () =>
-        this._utilService.mensagem(
-          ETipoMensagem.ERROR,
-          `Erro ao carregar a lista das pessoas!`
-        ),
-      complete: () => {
-        this._painelPessoasState.carregandoListaPessoas = false;
-      },
-    });
+    this._abitusService
+      .listaPessoas(parametros)
+      .pipe(takeUntil(this.removeInscricao$))
+      .subscribe({
+        next: (res: ResponsePessoas) => {
+          this._painelPessoasState.listaPessoas = res;
+        },
+        error: () =>
+          this._utilService.mensagem(
+            ETipoMensagem.ERROR,
+            `Erro ao carregar a lista das pessoas!`
+          ),
+        complete: () => {
+          this._painelPessoasState.carregandoListaPessoas = false;
+        },
+      });
   }
 
   getPessoa(idPessoa: number): Pessoa {
@@ -72,5 +77,10 @@ export class PainelPessoasFacade {
     });
 
     return resultado;
+  }
+
+  ngOnDestroy(): void {
+    this.removeInscricao$.next();
+    this.removeInscricao$.complete();
   }
 }

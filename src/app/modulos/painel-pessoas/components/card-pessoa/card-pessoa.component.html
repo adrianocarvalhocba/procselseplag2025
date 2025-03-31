@@ -9,6 +9,7 @@
     <img
       class="object-cover rounded-lg h-32"
       [src]="dadosPessoa.urlFoto"
+      (error)="onErroCarregarImagem($event)"
       alt="foto"
     />
   </div>

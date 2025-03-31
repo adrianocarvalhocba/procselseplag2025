@@ -30,7 +30,6 @@ export class DetalhamentoCasoComponent {
       Number(this._route.snapshot.url[1].path)
     );
 
-    // se não tem foto, carrega a foto silhueta de acordo com o sexo
     if (!this.dadosPessoa.urlFoto || this.dadosPessoa.urlFoto == null) {
       if (this.dadosPessoa.sexo === 'MASCULINO') {
         this.dadosPessoa.urlFoto = 'assets/sem-foto-masculino.png';
@@ -39,12 +38,10 @@ export class DetalhamentoCasoComponent {
       }
     }
 
-    // armazena a data do desaparecimento e localizacao
     this.dtDesaparecimento =
       this.dadosPessoa.ultimaOcorrencia.dtDesaparecimento;
     this.dtLocalizacao = this.dadosPessoa.ultimaOcorrencia.dataLocalizacao;
 
-    // descobre quantos dias a pessoa esta/esteve desaparecida
     const data1: any = new Date(Date.now());
     const data2: any = new Date(
       this.dadosPessoa.ultimaOcorrencia.dtDesaparecimento
@@ -53,12 +50,10 @@ export class DetalhamentoCasoComponent {
     const diffInMs = Math.abs(data2 - data1);
     this.qtdeDiasDesap = Math.round(diffInMs / (1000 * 60 * 60 * 24));
 
-    // converte a data/hora do desaparecimento
     let aux = this.dadosPessoa.ultimaOcorrencia.dtDesaparecimento.split('T');
     this.dtDesaparecimento = aux[0].split('-').reverse().join('/');
     this.dtDesaparecimento += ' - ' + aux[1];
 
-    // converte a data da localização
     if (this.dtLocalizacao) {
       this.dtLocalizacao = this.dadosPessoa.ultimaOcorrencia.dataLocalizacao
         .split('-')
@@ -66,7 +61,6 @@ export class DetalhamentoCasoComponent {
         .join('/');
     }
 
-    // cria o titulo da foto: Localizado ou Desaparecido
     if (!this.dadosPessoa.ultimaOcorrencia.dataLocalizacao) {
       if (this.dadosPessoa.sexo === 'MASCULINO') {
         this.tituloFoto = 'Desaparecido';
